@@ -67,7 +67,7 @@ Giống lab SCA-01. Mã nguồn trong [`code/`](code/):
 |---|---|
 | `simulate_tvla.py` | Sinh dữ liệu fixed-vs-random giả lập (có cờ `--leak 0` để mô phỏng thiết bị an toàn) |
 | `tvla.py` | Tính t-test, in |t| lớn nhất và kết luận |
-| `capture_traces.py` | Dùng lại từ SCA-01 để thu trace thật (xem mục 6.2) |
+| `capture_traces.py` | Dùng lại từ SCA-01, có cờ `--tvla` để thu và đánh nhãn fixed/random (mục 6.2) |
 
 ## 5. An toàn & dữ liệu
 - Lưu trace ngoài repo (`.gitignore` đã chặn `*.npy`).
@@ -96,12 +96,18 @@ Thiết bị không rò rỉ: |t| lớn nhất = 3.56  -> KHÔNG phát hiện r�
 ```
 
 ### 6.2 Thu trace thật
-TVLA cần dữ liệu đã đánh nhãn nhóm. Khi thu bằng `capture_traces.py`, với mỗi trace hãy
-tung đồng xu: ~50% dùng plaintext cố định (nhóm 1), ~50% dùng plaintext ngẫu nhiên (nhóm 0),
-rồi lưu nhãn vào `<prefix>_group.npy`. (Có thể bổ sung cờ cho script này như bài tập mục 9.)
+`capture_traces.py` đã có sẵn chế độ TVLA. Thêm cờ `--tvla`: với mỗi trace, script tung
+đồng xu để chọn nhóm fixed (plaintext cố định) hoặc random (plaintext ngẫu nhiên), giữ
+nguyên khóa, và lưu nhãn vào `<out>_group.npy` đúng định dạng mà `tvla.py` cần:
 
-Nên **xen kẽ ngẫu nhiên** hai nhóm trong lúc thu, không thu hết nhóm này rồi mới sang nhóm kia,
-để tránh ảnh hưởng của trôi nhiệt độ theo thời gian.
+```bash
+python capture_traces.py --hex simpleserial-aes-CWLITEARM.hex --n 4000 --out lab2 --tvla
+```
+
+Script **xen kẽ ngẫu nhiên** hai nhóm theo từng trace (không thu hết nhóm này rồi mới sang
+nhóm kia), nhờ đó tránh được ảnh hưởng của trôi nhiệt độ theo thời gian. Nhãn nhóm chỉ được
+lưu cho các trace thu **thành công**, nên `_group.npy` luôn khớp số lượng với `_traces.npy`
+kể cả khi có trace lỗi. Dùng `--seed` nếu muốn lặp lại đúng cách chia nhóm.
 
 ### 6.3 Chạy đánh giá
 ```bash
@@ -132,7 +138,8 @@ plt.xlabel("Mẫu"); plt.ylabel("t"); plt.title("TVLA fixed-vs-random"); plt.sho
 
 ## 9. Câu hỏi & bài tập
 1. Vì sao |t| < 4.5 **không** chứng minh thiết bị an toàn?
-2. Thêm cờ `--tvla` vào `capture_traces.py` để tự đánh nhãn và lưu `_group.npy`.
+2. (Đã có sẵn) Đọc hàm `plan_tvla_groups` trong `capture_traces.py` và giải thích vì sao
+   nhãn nhóm phải lưu *sau khi* biết trace thu thành công.
 3. Làm **TVLA specific**: thay nhãn fixed/random bằng nhãn theo một bit của `SBOX[pt^key]`,
    so sánh độ nhạy với bản non-specific.
 4. Vẽ |t| lớn nhất theo số trace (25, 50, 100, …) để thấy rò rỉ lộ dần.
