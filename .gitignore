@@ -1,0 +1,41 @@
+# --- Bí mật & cấu hình cục bộ ---
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials*
+
+# --- Dữ liệu thí nghiệm SCA/FI (lớn, có thể chứa khóa/khách hàng) ---
+*.npy
+*.npz
+*.h5
+*.hdf5
+*.trs
+*.cwp
+traces/
+captures/
+projects/*_data/
+
+# --- Firmware & bản dump ---
+*.bin
+*.hex
+*.elf
+*.img
+dumps/
+firmware/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# --- Hệ điều hành / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
