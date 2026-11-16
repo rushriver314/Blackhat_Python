@@ -62,7 +62,7 @@ Với mỗi byte khóa và mỗi khóa đoán `k` (0..255):
 |---|---|
 | Capture board | ChipWhisperer-Lite (CW1173) |
 | Target | CW308 / CW-Lite ARM, STM32F303 (`PLATFORM=CWLITEARM`) |
-| Phần mềm | Python ≥ 3.9, `chipwhisperer` 5.x, `numpy`, `tqdm` |
+| Phần mềm | Python ≥ 3.9, `chipwhisperer` 5.x hoặc 6.x (đã kiểm tra tên hàm với bản 6.0.0), `numpy`, `tqdm` |
 | Firmware | `simpleserial-aes`, thư viện `TINYAES128C` |
 | Máy tính | Linux / Windows / macOS có cổng USB |
 

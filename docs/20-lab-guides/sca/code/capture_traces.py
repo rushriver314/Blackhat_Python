@@ -1,7 +1,7 @@
 """Thu power trace AES-128 bằng ChipWhisperer-Lite (target STM32F3, CWLITEARM).
 
 Yêu cầu:
-  - chipwhisperer 5.x  (pip install chipwhisperer)
+  - chipwhisperer 5.x hoặc 6.x  (pip install chipwhisperer)
   - Đã build firmware: hardware/victims/firmware/simpleserial-aes
         make PLATFORM=CWLITEARM CRYPTO_TARGET=TINYAES128C SS_VER=SS_VER_2_1
 
